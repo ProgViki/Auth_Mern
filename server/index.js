@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const UserModel = require('./model/User');
 
-// mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true });
 
 const app = express();
 app.use(express.json());
@@ -18,14 +17,16 @@ app.use(cors({
 }));
 app.use(cookieParser());
 
-mongoose.connect('mongodb://127.0.0.1:27017/test')
+mongoose.connect('mongodb://localhost:27017/auth-vik');
+
+// mongoose.connect('mongodb://127.0.0.1:27017/test')
 
 
 app.post('/register', (req, res) => {
-    const {name, email, password} = req.body;
+    const {fullName, email, password} = req.body;
     bcrypt.hash(password, 10)
     .then(hash => {
-        UserModel.create({name, email, password: hash})
+        UserModel.create({fullName, email, password: hash})
         .then(user => res.json({status: "Success"}))
         .catch(err => res.json(err))
 
