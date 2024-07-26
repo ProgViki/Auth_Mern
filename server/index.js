@@ -11,7 +11,7 @@ const UserModel = require('./model/User');
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: ['https://localhost:27017'],
+    origin: ['https://localhost:27017/auth-viki'],
     methods: ['GET', 'POST'],
     credentials: true
 }));
@@ -29,7 +29,6 @@ app.post('/register', (req, res) => {
         UserModel.create({fullName, email, password: hash})
         .then(user => res.json({status: "Success"}))
         .catch(err => res.json(err))
-
     }).catch(err => res.json(err))
 })
 
